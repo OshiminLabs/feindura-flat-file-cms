@@ -18,7 +18,7 @@ class Element {
 			$this->parent = $parent;
 	}
 	
-	function addChild(Element $child) {
+	function addChild($child) {
 		$this->children[] = $child;
 		$child->setParent($this);
 	}
