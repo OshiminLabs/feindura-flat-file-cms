@@ -239,6 +239,9 @@ if(substr($docRoot, -1) == '/')
 if(!@is_dir($docRoot))
   $docRoot = false;
 
+    $docRoot = str_replace('\\','/',$docRoot);
+    $docRoot = preg_replace('#/+#','/',$docRoot);
+
 define('DOCUMENTROOT', $docRoot);
 unset($fileDir,$docRoot,$docRootPattern); //unset($docRoot,$basePath,$localpath,$absolutepath);
 
