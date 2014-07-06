@@ -568,6 +568,26 @@ class GeneralFunctions {
   }
 
 /**
+  * <b>Name</b> NormalizePath()<br>
+  *
+  * Adds the URIEXTENSION to a given path.
+  *
+  * @param string $path the path to change
+  *
+  * @return string the normalized path
+  *
+  *
+  * @version 1.0
+  * <br>
+  * <b>ChangeLog</b><br>
+  *    - 1.0 initial release
+  *
+  */
+  public static function NormalizePath($path) {
+      return preg_replace('#/+#','/',str_replace('\\','/',$path));
+  }
+
+/**
   * <b>Name</b> Path2URI()<br>
   *
   * Adds the URIEXTENSION to a given path.
@@ -585,17 +605,19 @@ class GeneralFunctions {
   *
   */
   public static function Path2URI($path) {
-    if(strpos($path, DOCUMENTROOT) !== false) {
+    $docRoot = self::NormalizePath(DOCUMENTROOT);
+    $path = GeneralFunctions::NormalizePath($path);
+    if(strpos($path, $docRoot) !== false) {
       if($path = self::getRealPath($path)) {
-        $path = str_replace(DOCUMENTROOT,'',$path);
+        $path = str_replace($docRoot,'',self::NormalizePath($path));
         $path .= '/';
         $path = preg_replace('#/+#', "/", $path);
       }
     }
-
-    if($path)
-      return URIEXTENSION.$path;
-    else
+    if($path){
+      $path = URIEXTENSION.$path;
+      return $path;
+    } else
       return false;
   }
 
