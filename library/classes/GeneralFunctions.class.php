@@ -614,10 +614,9 @@ class GeneralFunctions {
         $path = preg_replace('#/+#', "/", $path);
       }
     }
-    if($path){
-      $path = URIEXTENSION.$path;
-      return $path;
-    } else
+   if($path)
+      return self::NormalizePath(URIEXTENSION.$path);
+    else
       return false;
   }
 
